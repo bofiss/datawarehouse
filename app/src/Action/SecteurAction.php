@@ -28,8 +28,8 @@ class SecteurAction
     {
         $this->logger->info("Secteur page action dispatched");
         $data = Secteur::all();
-        $data = json_decode($data);
-        $response = $this->JsonRender->render($response, 200, $data);
+        $response = $response->withJson($data->toArray());
+        $response = $response->withStatus(200);
         return $response;
 
     }
@@ -39,16 +39,18 @@ class SecteurAction
         $this->logger->info("Secteur par i page action dispatched");
         $id = $args['id'];
         $data = Secteur::find($id);
-        $response = $this->JsonRender->render($response, 200, $data->toArray());
+        $response = $response->withJson($data->toArray());
+        $response = $response->withStatus(200);
         return $response;
     }
 
-    public function secteteurPerYear(Request $request, Response $response, $args)
+    public function secteurPerYear(Request $request, Response $response, $args)
     {
         $this->logger->info("Secteur par i page action dispatched");
         $id = $args['id'];
         $data = Secteur::find($id);
-        $response = $this->JsonRender->render($response, 200, $data->toArray());
+        $response = $response->withJson($data->toArray());
+        $response = $response->withStatus(200);
         return $response;
     }
 
@@ -60,10 +62,11 @@ class SecteurAction
         $id = $args['id'];
         $data = Dataview::where('secteur_id', $id)->with('critere')->get();
 
-        $data = json_decode($data);
-        $response = $this->JsonRender->render($response, 200, $data);
+        $response = $response->withJson($data->toArray());
+        $response = $response->withStatus(200);
         return $response;
     }
+
     public function values(Request $request, Response $response, $args)
     {
         $this->logger->info("Value per secteur_id and critere_id page action dispatched");
@@ -71,10 +74,11 @@ class SecteurAction
         $critere_id = $args['critere_id'];
         $data = Dataview::where('secteur_id', '=', $id)->where('critere_id', $critere_id)->with('value')->get();
 
-        $data = json_decode($data);
-        $response = $this->JsonRender->render($response, 200, $data);
+        $response = $response->withJson($data->toArray());
+        $response = $response->withStatus(200);
         return $response;
     }
+
     public function valuesPerYear(Request $request, Response $response, $args)
     {
         $this->logger->info("Value per secteur_id and critere_id page action dispatched");
@@ -82,9 +86,8 @@ class SecteurAction
         $critere_id = $args['critere_id'];
         $year = $args['year'];
         $data = Dataview::where('year', $year)->where('secteur_id', '=', $id)->where('critere_id', $critere_id)->with('value')->get();
-
-        $data = json_decode($data);
-        $response = $this->JsonRender->render($response, 200, $data);
+        $response = $response->withJson($data->toArray());
+        $response = $response->withStatus(200);
         return $response;
     }
 
